@@ -37,10 +37,12 @@ end
 
 gem 'mongoid', '~> 4.0.2'
 gem 'haml'
-gem 'simple_form'
 gem 'bootstrap-sass'
 gem 'kaminari'
 gem 'kaminari-bootstrap'
+
+gem 'simple-navbar', :github => 'mindpin/simple-navbar',
+                     :tag => "0.0.6"
 
 gem 'play_auth', :github => 'mindpin/play_auth',
                  :tag => :latest
