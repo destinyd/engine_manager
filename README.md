@@ -1,38 +1,56 @@
 # EngineManager
+这是一个用于管理组件的组件，提供一个后台，可以整合各组件的管理页面，实现统一管理。
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/engine_manager`. To experiment with that code, run `bin/console` for an interactive prompt.
+## 安装
 
-TODO: Delete this and the text above, and describe your gem
+添加此行至 Gemfile:
 
-## Installation
-
-Add this line to your application's Gemfile:
 
 ```ruby
-gem 'engine_manager'
+gem 'engine_manager', github: 'mindpin/engine_manager'
+gem 'engine_manager', github: 'mindpin/engine_manager'
 ```
 
-And then execute:
+然后运行:
+```shell
+bundle
+```
 
-    $ bundle
 
-Or install it yourself as:
+## 使用说明
+运行生成 simple-navbar 配置文件
+```shell
+rails g simple_navbar_config config
+```
 
-    $ gem install engine_manager
+编辑生成配置文件 **config/simple_navbar_config.rb**
 
-## Usage
+```ruby
+SimpleNavbar::Base.config do
+  rule :engine_manager do
+    nav :index, :name => '首页', :url => '/dashboard', html:{target: 'iframe_content'} do
+      controller :'engine_manager/home'
+    end
 
-TODO: Write usage instructions here
+    nav :auth, :name => '注册', :url => '/auth', html:{target: 'iframe_content'} do
+      controller :'play_auth/users'
+    end
+  end
+end
+```
 
-## Development
+以上可以替换为你所需要的名称、链接、controller，但是 **target: 'iframe_content'** 必须保证存在，否则显示会不正常。
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake false` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+编辑 **config/routes.rb** , 给 engine_manager 设置你想要的路径
+```ruby
+  EngineManager::Routing.mount '/manager', :as => 'engine_manager'
+```
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+访问 **/manager** 即可看到管理页面。
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/engine_manager. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/mindpin/engine_manager. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
 
 
 ## License
